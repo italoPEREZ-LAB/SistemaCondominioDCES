@@ -1,0 +1,71 @@
+﻿@model SistemaCondominioDCES.Models.Comunicado
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Nuevo Comunicado";
+}
+
+<div class="admin-layout">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand">
+                <img src="~/Content/images/img_dash.png" alt="Logo" class="logo-icon" />
+                <div>
+                    <h3>CONSORCIO DCES</h3>
+                    <p>Gestion de Condominios</p>
+                </div>
+            </div>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="sidebar-item"><a href="/Home/Dashboard"><span>🏠 Inicio</span></a></li>
+            <li class="sidebar-item"><a href="/Propietario"><span>👥 Propietarios</span></a></li>
+            <li class="sidebar-item"><a href="/Departamento"><span>🏢 Departamentos</span></a></li>
+            <li class="sidebar-item"><a href="/Pago/Index"><span>💰 Pagos</span></a></li>
+            <li class="sidebar-item"><a href="/Incidencia"><span>⚠️ Incidencias</span></a></li>
+            <li class="sidebar-item"><a href="/Reserva/Index"><span>📅 Reservas</span></a></li>
+            <li class="sidebar-item"><a href="/reportes/Index"><span>📈 Reportes</span></a></li>
+            <li class="sidebar-item active"><a href="/comunicado/Index"><span>📢 Comunicados</span></a></li>
+            <li class="sidebar-item"><a href="/configuracion/Index"><span>⚙️ Configuración</span></a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="/Home/Logout" class="sidebar-logout"><span>🚪 Cerrar Sesión</span></a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-header">
+            <span class="header-breadcrumb">Nuevo Comunicado</span>
+            <div class="user-role-box">Rol: @Session["Rol"]</div>
+        </header>
+
+        <div class="dashboard-viewport">
+            <div class="form-card">
+                <p class="form-card-breadcrumb"><a href="/Comunicado/Index">Comunicados</a> › Nuevo Comunicado</p>
+
+                @if (ViewBag.Error != null)
+                {
+                    <div class="form-alert-error">@ViewBag.Error</div>
+                }
+
+                @using (Html.BeginForm("Create", "Comunicado", FormMethod.Post))
+                {
+                    <div class="form-field-row">
+                        <label class="form-field-label">Titulo <span class="required">*</span></label>
+                        @Html.TextBoxFor(m => m.Titulo, new { @class = "form-input-custom", placeholder = "Ej: Mantenimiento programado" })
+                    </div>
+                    <div class="form-field-row">
+                        <label class="form-field-label">Contenido <span class="required">*</span></label>
+                        @Html.TextAreaFor(m => m.Contenido, new { @class = "form-textarea-custom", rows = "5", placeholder = "Escribe el contenido del comunicado..." })
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-form-submit">Guardar Comunicado</button>
+                        <a href="/Comunicado/Index" class="btn-form-cancel">Cancelar</a>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <footer class="dashboard-footer">
+            © 2026 Consorcio DCES. Todos los derechos reservados.
+        </footer>
+    </main>
+</div>

@@ -1,0 +1,131 @@
+﻿@model SistemaCondominioDCES.Models.Reserva
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Editar Reserva";
+    var usuarios = ViewBag.Usuarios as List<SelectListItem>;
+    var areas = ViewBag.Areas as List<SelectListItem>;
+}
+
+<div class="admin-layout">
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand">
+                <img src="~/Content/images/img_dash.png" alt="Logo" class="logo-icon" />
+                <div><h3>CONSORCIO DCES</h3><p>Gestión de Condominios</p></div>
+            </div>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="sidebar-item"><a href="/Home/Dashboard"><span>🏠 Inicio</span></a></li>
+            <li class="sidebar-item"><a href="/Propietario"><span>👥 Propietarios</span></a></li>
+            <li class="sidebar-item"><a href="/Departamento"><span>🏢 Departamentos</span></a></li>
+            <li class="sidebar-item"><a href="/Pago/Index"><span>💰 Pagos</span></a></li>
+            <li class="sidebar-item"><a href="/Incidencia"><span>⚠️ Incidencias</span></a></li>
+            <li class="sidebar-item active"><a href="/Reserva/Index"><span>📅 Reservas</span></a></li>
+            <li class="sidebar-item"><a href="/reportes/Index"><span>📈 Reportes</span></a></li>
+            <li class="sidebar-item"><a href="/comunicado/Index"><span>📢 Comunicados</span></a></li>
+            <li class="sidebar-item"><a href="/configuracion/Index"><span>⚙️ Configuración</span></a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="/Home/Logout" class="sidebar-logout"><span>🚪 Cerrar Sesión</span></a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-header">
+            <span class="header-breadcrumb">Editar Reserva</span>
+            <div class="user-role-box">Rol: @Session["Rol"]</div>
+        </header>
+
+        <div class="dashboard-viewport">
+
+            @if (ViewBag.Error != null)
+            {
+                <div class="form-alert-error">⚠️ @ViewBag.Error</div>
+            }
+
+            <div class="form-card">
+                <div class="form-card-breadcrumb">
+                    <a href="/Reserva/Index">Reservas</a> › Editar Reserva
+                </div>
+
+                <form method="post">
+                    <input type="hidden" name="IdReserva" value="@Model.IdReserva" />
+
+                    <div class="form-field-row">
+                        <label class="form-field-label">Área Común <span class="required">*</span></label>
+                        <div class="form-field-input">
+                            <select name="IdAreaComun" class="form-select-custom" required>
+                                <option value="">Seleccionar área</option>
+                                @if (areas != null)
+                                {
+                                    foreach (var a in areas)
+                                    {
+                                        <option value="@a.Value" @(a.Value == Model.IdAreaComun.ToString() ? "selected" : "")>@a.Text</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-field-row">
+                        <label class="form-field-label">Fecha <span class="required">*</span></label>
+                        <div class="form-field-input">
+                            <input type="date" name="FechaReserva" value="@Model.FechaReserva.ToString("yyyy-MM-dd")" class="form-input-custom" required />
+                        </div>
+                    </div>
+
+                    <div class="form-field-row">
+                        <label class="form-field-label">Hora Inicio <span class="required">*</span></label>
+                        <div class="form-field-input">
+                            <input type="time" name="HoraInicio" value="@Model.HoraInicio.ToString(@"hh\:mm")" class="form-input-custom" required />
+                        </div>
+                    </div>
+
+                    <div class="form-field-row">
+                        <label class="form-field-label">Hora Fin <span class="required">*</span></label>
+                        <div class="form-field-input">
+                            <input type="time" name="HoraFin" value="@Model.HoraFin.ToString(@"hh\:mm")" class="form-input-custom" required />
+                        </div>
+                    </div>
+
+                    <div class="form-field-row">
+                        <label class="form-field-label">Solicitante <span class="required">*</span></label>
+                        <div class="form-field-input">
+                            <select name="IdUsuario" class="form-select-custom" required>
+                                <option value="">Seleccionar propietario</option>
+                                @if (usuarios != null)
+                                {
+                                    foreach (var u in usuarios)
+                                    {
+                                        <option value="@u.Value" @(u.Value == Model.IdUsuario.ToString() ? "selected" : "")>@u.Text</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-field-row">
+                        <label class="form-field-label">Estado <span class="required">*</span></label>
+                        <div class="form-field-input">
+                            <select name="Estado" class="form-select-custom" required>
+                                <option value="Pendiente" @(Model.Estado == "Pendiente" ? "selected" : "")>Pendiente</option>
+                                <option value="Confirmada" @(Model.Estado == "Confirmada" ? "selected" : "")>Confirmada</option>
+                                <option value="Cancelada" @(Model.Estado == "Cancelada" ? "selected" : "")>Cancelada</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-form-submit">💾 Actualizar Reserva</button>
+                        <a href="/Reserva/Index" class="btn-form-cancel">✕ Cancelar</a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <footer class="dashboard-footer">© 2026 Consorcio DCES. Todos los derechos reservados.</footer>
+    </main>
+
+</div>

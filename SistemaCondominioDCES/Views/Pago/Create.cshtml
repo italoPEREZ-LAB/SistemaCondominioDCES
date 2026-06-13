@@ -1,0 +1,118 @@
+﻿@model SistemaCondominioDCES.Models.Pago
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Registrar Pago";
+    var recibos = ViewBag.Recibos as List<SelectListItem>;
+}
+
+<div class="admin-layout">
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand">
+                <img src="~/Content/images/img_dash.png" alt="Logo" class="logo-icon" />
+                <div>
+                    <h3>CONSORCIO DCES</h3>
+                    <p>Gestión de Condominios</p>
+                </div>
+            </div>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="sidebar-item"><a href="/Home/Dashboard"><span>🏠 Inicio</span></a></li>
+            <li class="sidebar-item"><a href="/Propietario"><span>👥 Propietarios</span></a></li>
+            <li class="sidebar-item"><a href="/Departamento"><span>🏢 Departamentos</span></a></li>
+            <li class="sidebar-item active"><a href="/Pago/Index"><span>💰 Pagos</span></a></li>
+            <li class="sidebar-item"><a href="/Incidencia"><span>⚠️ Incidencias</span></a></li>
+            <li class="sidebar-item"><a href="/Reserva/Index"><span>📅 Reservas</span></a></li>
+            <li class="sidebar-item"><a href="/reportes/Index"><span>📈 Reportes</span></a></li>
+            <li class="sidebar-item"><a href="/comunicado/Index"><span>📢 Comunicados</span></a></li>
+            <li class="sidebar-item"><a href="/configuracion/Index"><span>⚙️ Configuración</span></a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="/Home/Logout" class="sidebar-logout"><span>🚪 Cerrar Sesión</span></a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-header">
+            <span class="header-breadcrumb">Registro de Pagos</span>
+            <div class="user-role-box">Rol: @Session["Rol"]</div>
+        </header>
+
+        <div class="dashboard-viewport">
+
+            @if (ViewBag.Error != null)
+            {
+                <div class="form-alert-error">⚠️ @ViewBag.Error</div>
+            }
+
+            <div class="form-card">
+                <div class="form-card-breadcrumb">
+                    <a href="/Pago/Index">Pagos</a> › Registro de Pago
+                </div>
+
+                <form method="post">
+
+                    <div class="form-field-row">
+                        <label class="form-field-label">Recibo <span class="required">*</span></label>
+                        <div class="form-field-input">
+                            <select name="IdRecibo" class="form-select-custom" required>
+                                <option value="">Seleccionar recibo</option>
+                                @foreach (var r in recibos)
+                                {
+                                    <option value="@r.Value">@r.Text</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-field-row">
+                        <label class="form-field-label">Monto (S/.) <span class="required">*</span></label>
+                        <div class="form-field-input">
+                            <input type="number" step="0.01" name="MontoPagado" class="form-input-custom" placeholder="Ingrese monto" required />
+                        </div>
+                    </div>
+
+                    <div class="form-field-row">
+                        <label class="form-field-label">Fecha de Pago <span class="required">*</span></label>
+                        <div class="form-field-input">
+                            <input type="date" name="FechaPago" class="form-input-custom" required />
+                        </div>
+                    </div>
+
+                    <div class="form-field-row">
+                        <label class="form-field-label">Método de Pago <span class="required">*</span></label>
+                        <div class="form-field-input">
+                            <select name="MetodoPago" class="form-select-custom" required>
+                                <option value="">Seleccionar método de pago</option>
+                                <option value="Efectivo">Efectivo</option>
+                                <option value="Transferencia">Transferencia</option>
+                                <option value="Yape">Yape</option>
+                                <option value="Plin">Plin</option>
+                                <option value="Tarjeta">Tarjeta</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-field-row">
+                        <label class="form-field-label">Observación</label>
+                        <div class="form-field-input">
+                            <textarea name="Observacion" class="form-textarea-custom" placeholder="Ingrese una observación (opcional)" rows="3"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-form-submit">💾 Registrar Pago</button>
+                        <a href="/Pago/Index" class="btn-form-cancel">✕ Cancelar</a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <footer class="dashboard-footer">
+            © 2026 Consorcio DCES. Todos los derechos reservados.
+        </footer>
+    </main>
+
+</div>

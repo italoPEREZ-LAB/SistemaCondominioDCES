@@ -1,0 +1,75 @@
+﻿@model SistemaCondominioDCES.Models.Condominio
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Configuracion";
+}
+
+<div class="admin-layout">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand">
+                <img src="~/Content/images/img_dash.png" alt="Logo" class="logo-icon" />
+                <div>
+                    <h3>CONSORCIO DCES</h3>
+                    <p>Gestion de Condominios</p>
+                </div>
+            </div>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="sidebar-item"><a href="/Home/Dashboard"><span>🏠 Inicio</span></a></li>
+            <li class="sidebar-item"><a href="/Propietario"><span>👥 Propietarios</span></a></li>
+            <li class="sidebar-item"><a href="/Departamento"><span>🏢 Departamentos</span></a></li>
+            <li class="sidebar-item"><a href="/Pago/Index"><span>💰 Pagos</span></a></li>
+            <li class="sidebar-item"><a href="/Incidencia"><span>⚠️ Incidencias</span></a></li>
+            <li class="sidebar-item"><a href="/Reserva/Index"><span>📅 Reservas</span></a></li>
+            <li class="sidebar-item"><a href="/reportes/Index"><span>📈 Reportes</span></a></li>
+            <li class="sidebar-item"><a href="/comunicado/Index"><span>📢 Comunicados</span></a></li>
+            <li class="sidebar-item active"><a href="/configuracion/Index"><span>⚙️ Configuración</span></a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="/Home/Logout" class="sidebar-logout"><span>🚪 Cerrar Sesión</span></a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-header">
+            <span class="header-breadcrumb">Configuracion</span>
+            <div class="user-role-box">Rol: @Session["Rol"]</div>
+        </header>
+
+        <div class="dashboard-viewport">
+            <div class="form-card">
+                <h5 style="margin-bottom:20px; font-size:16px; font-weight:700;">Datos del Condominio</h5>
+
+                @if (ViewBag.Error != null)
+                {
+                    <div class="form-alert-error">@ViewBag.Error</div>
+                }
+                @if (ViewBag.Success != null)
+                {
+                    <div class="alerta-success">@ViewBag.Success</div>
+                }
+
+                @using (Html.BeginForm("Index", "Configuracion", FormMethod.Post))
+                {
+                    @Html.HiddenFor(m => m.IdCondominio)
+                    <div class="form-field-row">
+                        <label class="form-field-label">Nombre del Condominio <span class="required">*</span></label>
+                        @Html.TextBoxFor(m => m.NombreCondominio, new { @class = "form-input-custom" })
+                    </div>
+                    <div class="form-field-row">
+                        <label class="form-field-label">Direccion <span class="required">*</span></label>
+                        @Html.TextBoxFor(m => m.Direccion, new { @class = "form-input-custom" })
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-form-submit">Guardar Cambios</button>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <footer class="dashboard-footer">
+            © 2026 Consorcio DCES. Todos los derechos reservados.
+        </footer>
+    </main>
+</div>

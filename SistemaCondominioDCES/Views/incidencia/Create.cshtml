@@ -1,0 +1,71 @@
+﻿@model SistemaCondominioDCES.Models.Incidencia
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Nueva Incidencia";
+}
+
+<div class="admin-layout">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand">
+                <img src="~/Content/images/img_dash.png" alt="Logo" class="logo-icon" />
+                <div>
+                    <h3>CONSORCIO DCES</h3>
+                    <p>Gestion de Condominios</p>
+                </div>
+            </div>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="sidebar-item"><a href="/Home/Dashboard"><span>🏠 Inicio</span></a></li>
+            <li class="sidebar-item"><a href="/Propietario"><span>👥 Propietarios</span></a></li>
+            <li class="sidebar-item"><a href="/Departamento"><span>🏢 Departamentos</span></a></li>
+            <li class="sidebar-item"><a href="/Pago/Index"><span>💰 Pagos</span></a></li>
+            <li class="sidebar-item active"><a href="/Incidencia"><span>⚠️ Incidencias</span></a></li>
+            <li class="sidebar-item"><a href="/Reserva/Index"><span>📅 Reservas</span></a></li>
+            <li class="sidebar-item"><a href="/reportes/Index"><span>📈 Reportes</span></a></li>
+            <li class="sidebar-item"><a href="/comunicado/Index"><span>📢 Comunicados</span></a></li>
+            <li class="sidebar-item"><a href="/configuracion/Index"><span>⚙️ Configuración</span></a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="/Home/Logout" class="sidebar-logout"><span>🚪 Cerrar Sesión</span></a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-header">
+            <span class="header-breadcrumb">Nueva Incidencia</span>
+            <div class="user-role-box">Rol: @Session["Rol"]</div>
+        </header>
+
+        <div class="dashboard-viewport">
+            <div class="form-card">
+                <p class="form-card-breadcrumb"><a href="/Incidencia">Incidencias</a> › Nueva Incidencia</p>
+
+                @if (ViewBag.Error != null)
+                {
+                    <div class="form-alert-error">@ViewBag.Error</div>
+                }
+
+                @using (Html.BeginForm("Create", "Incidencia", FormMethod.Post))
+                {
+                    <div class="form-field-row">
+                        <label class="form-field-label">Titulo <span class="required">*</span></label>
+                        @Html.TextBoxFor(m => m.Titulo, new { @class = "form-input-custom", placeholder = "Ej: Foco quemado en pasadizo" })
+                    </div>
+                    <div class="form-field-row">
+                        <label class="form-field-label">Descripcion <span class="required">*</span></label>
+                        @Html.TextAreaFor(m => m.Descripcion, new { @class = "form-textarea-custom", rows = "4", placeholder = "Describe el problema con detalle..." })
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-form-submit">Guardar Incidencia</button>
+                        <a href="/Incidencia" class="btn-form-cancel">Cancelar</a>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <footer class="dashboard-footer">
+            © 2026 Consorcio DCES. Todos los derechos reservados.
+        </footer>
+    </main>
+</div>

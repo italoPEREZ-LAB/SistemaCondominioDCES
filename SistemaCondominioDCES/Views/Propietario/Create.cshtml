@@ -1,0 +1,107 @@
+﻿@model SistemaCondominioDCES.Models.Propietario
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Nuevo Propietario";
+}
+
+<div class="admin-layout">
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand">
+                <img src="~/Content/images/img_dash.png" alt="Logo" class="logo-icon" />
+                <div><h3>CONSORCIO DCES</h3><p>Gestión de Condominios</p></div>
+            </div>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="sidebar-item"><a href="/Home/Dashboard"><span>🏠 Inicio</span></a></li>
+            <li class="sidebar-item active"><a href="/Propietario"><span>👥 Propietarios</span></a></li>
+            <li class="sidebar-item"><a href="/Departamento"><span>🏢 Departamentos</span></a></li>
+            <li class="sidebar-item"><a href="/Pago/Index"><span>💰 Pagos</span></a></li>
+            <li class="sidebar-item"><a href="/Incidencia"><span>⚠️ Incidencias</span></a></li>
+            <li class="sidebar-item"><a href="/Reserva/Index"><span>📅 Reservas</span></a></li>
+            <li class="sidebar-item"><a href="/reportes/Index"><span>📈 Reportes</span></a></li>
+            <li class="sidebar-item"><a href="/comunicado/Index"><span>📢 Comunicados</span></a></li>
+            <li class="sidebar-item"><a href="/configuracion/Index"><span>⚙️ Configuración</span></a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="/Home/Logout" class="sidebar-logout"><span>🚪 Cerrar Sesión</span></a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-header">
+            <span class="header-breadcrumb">Nuevo Propietario</span>
+            <div class="user-role-box">Rol: @Session["Rol"]</div>
+        </header>
+
+        <div class="dashboard-viewport">
+            <div class="form-card">
+                <div class="form-card-breadcrumb">
+                    <a href="/Propietario">Propietarios</a> › Nuevo Propietario
+                </div>
+
+                <form method="post">
+
+                    <div class="form-field-row">
+                        <label class="form-field-label">Nombre <span class="required">*</span></label>
+                        <div class="form-field-input">
+                            <input type="text" name="Nombre" class="form-input-custom" placeholder="Ingrese nombre" required />
+                        </div>
+                    </div>
+
+                    <div class="form-field-row">
+                        <label class="form-field-label">Apellido <span class="required">*</span></label>
+                        <div class="form-field-input">
+                            <input type="text" name="Apellido" class="form-input-custom" placeholder="Ingrese apellido" required />
+                        </div>
+                    </div>
+
+                    <div class="form-field-row">
+                        <label class="form-field-label">DNI <span class="required">*</span></label>
+                        <div class="form-field-input">
+                            <input type="text" name="DNI" class="form-input-custom" placeholder="8 dígitos" maxlength="8" required />
+                        </div>
+                    </div>
+
+                    <div class="form-field-row">
+                        <label class="form-field-label">Teléfono</label>
+                        <div class="form-field-input">
+                            <input type="text" name="Telefono" class="form-input-custom" placeholder="Ingrese teléfono" />
+                        </div>
+                    </div>
+
+                    <div class="form-field-row">
+                        <label class="form-field-label">Correo</label>
+                        <div class="form-field-input">
+                            <input type="email" name="Correo" class="form-input-custom" placeholder="ejemplo@correo.com" />
+                        </div>
+                    </div>
+
+                    <div class="form-field-row">
+                        <label class="form-field-label">Torre</label>
+                        <div class="form-field-input">
+                            <input type="text" name="Torre" class="form-input-custom" placeholder="Ej: Torre A" />
+                        </div>
+                    </div>
+
+                    <div class="form-field-row">
+                        <label class="form-field-label">Nº Departamento</label>
+                        <div class="form-field-input">
+                            <input type="text" name="NumeroDepartamento" class="form-input-custom" placeholder="Ej: 101" />
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-form-submit">💾 Guardar Propietario</button>
+                        <a href="/Propietario" class="btn-form-cancel">✕ Cancelar</a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <footer class="dashboard-footer">© 2026 Consorcio DCES. Todos los derechos reservados.</footer>
+    </main>
+
+</div>

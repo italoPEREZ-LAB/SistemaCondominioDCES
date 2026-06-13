@@ -1,0 +1,84 @@
+
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Dashboard Propietario";
+}
+
+<div class="admin-layout">
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand">
+                <img src="~/Content/images/img_dash.png" alt="Logo" class="logo-icon" />
+                <div>
+                    <h3>CONSORCIO DCES</h3>
+                    <p>Gestion de Condominios</p>
+                </div>
+            </div>
+        </div>
+
+        <ul class="sidebar-menu">
+            <li class="sidebar-item active">
+                <a href="/Propietario/Dashboard"><span> Inicio</span></a>
+            </li>
+            <li class="sidebar-item">
+                <a href="/Pago/Index"><span> Pagos</span></a>
+            </li>
+            <li class="sidebar-item">
+                <a href="/Incidencia"><span> Incidencias</span></a>
+            </li>
+            <li class="sidebar-item">
+                <a href="/Reserva/Index"><span> Reservas</span></a>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <a href="/Home/Logout" class="sidebar-logout">
+                <span> Cerrar Sesion</span>
+            </a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-header">
+            <span class="header-breadcrumb">Dashboard Propietario</span>
+            <div class="user-role-box">Rol: @Session["Rol"]</div>
+        </header>
+
+        <div class="dashboard-viewport">
+
+            <div class="kpi-grid" style="grid-template-columns: repeat(3, 1fr);">
+                <div class="kpi-card-modern bg-green">
+                    <h3></h3>
+                    <p>Pagos</p>
+                    <a href="/Pago/Index" class="kpi-action-link">Ver mas </a>
+                </div>
+
+                <div class="kpi-card-modern bg-orange">
+                    <h3></h3>
+                    <p>Incidencias</p>
+                    <a href="/Incidencia" class="kpi-action-link">Ver mas </a>
+                </div>
+
+                <div class="kpi-card-modern bg-purple">
+                    <h3></h3>
+                    <p>Reservas</p>
+                    <a href="/Reserva/Index" class="kpi-action-link">Ver mas </a>
+                </div>
+            </div>
+
+            <div class="quick-actions-card">
+                <h5>Accesos rapidos del propietario</h5>
+                <a href="/Pago/Index" class="btn-action-quick action-green">Ver pagos</a>
+                <a href="/Incidencia/Create" class="btn-action-quick action-orange">Nueva incidencia</a>
+                <a href="/Reserva/Create" class="btn-action-quick action-purple">Nueva reserva</a>
+            </div>
+
+        </div>
+
+        <footer class="dashboard-footer">
+            © 2026 Consorcio DCES. Todos los derechos reservados.
+        </footer>
+    </main>
+
+</div>

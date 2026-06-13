@@ -1,0 +1,45 @@
+@{
+    ViewBag.Title = "Acceso Denegado";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    string urlRetorno = "/Home/Dashboard";
+
+    if (Session["Rol"] != null && Session["Rol"].ToString() == "Propietario")
+    {
+        urlRetorno = "/Propietario/Dashboard";
+    }
+}
+
+<div class="admin-layout">
+
+    <main class="main-content" style="width:100%;">
+        <div class="dashboard-viewport">
+
+            <div class="quick-actions-card" style="max-width:650px; margin:80px auto; text-align:center; padding:50px;">
+
+                <div style="font-size:70px; margin-bottom:20px;">
+                    
+                </div>
+
+                <h1 style="color:#dc2626; font-size:34px; margin-bottom:15px;">
+                    Acceso Denegado
+                </h1>
+
+                <p style="font-size:17px; color:#64748b; margin-bottom:30px;">
+                    No tienes permisos para ingresar a este modulo.
+                </p>
+
+                <a href="@urlRetorno" class="btn-action-quick action-blue">
+                    Volver al Dashboard
+                </a>
+
+                <a href="/Home/Logout" class="btn-action-quick action-orange">
+                    Cerrar Sesion
+                </a>
+
+            </div>
+
+        </div>
+    </main>
+
+</div>

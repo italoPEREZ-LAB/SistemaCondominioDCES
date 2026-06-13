@@ -1,0 +1,56 @@
+﻿@{
+    Layout = null;
+    ViewBag.Title = "Login";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Login - Sistema Condominio</title>
+    <link href="~/Content/site.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-left">
+            <div class="overlay"></div>
+        </div>
+
+        <div class="login-right">
+            <div class="form-wrapper">
+                <div class="login-header">
+                    <h2>Bienvenido</h2>
+                    <p class="sub-welcome">Inicie sesión para continuar</p>
+                </div>
+
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert-danger">
+                        <span>@ViewBag.Error</span>
+                    </div>
+                }
+
+                <form method="post" action="/Home/Login" class="form-content" style="margin-top: 40px;">
+                    <div class="form-group">
+                        <label>Correo electrónico</label>
+                        <input type="email" name="correo" placeholder="Ingrese su correo electrónico" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Contraseña</label>
+                        <input type="password" name="password" placeholder="Ingrese su contraseña" required />
+                    </div>
+
+                    <button type="submit" class="btn-primary">
+                        Iniciar Sesión
+                    </button>
+                </form>
+            </div>
+
+            <footer class="login-footer">
+                © 2026 Consorcio DCES. Todos los derechos reservados.
+            </footer>
+        </div>
+    </div>
+</body>
+</html>

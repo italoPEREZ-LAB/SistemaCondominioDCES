@@ -1,0 +1,123 @@
+﻿@model List<SistemaCondominioDCES.Models.Propietario>
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Propietarios";
+}
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand">
+                <img src="~/Content/images/img_dash.png" alt="Logo" class="logo-icon" />
+                <div>
+                    <h3>CONSORCIO DCES</h3>
+                    <p>Gestión de Condominios</p>
+                </div>
+            </div>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="sidebar-item">
+                <a href="/Home/Dashboard"><span>🏠 Inicio</span></a>
+            </li>
+            <li class="sidebar-item active">
+                <a href="/Propietario"><span>👥 Propietarios</span></a>
+            </li>
+            <li class="sidebar-item">
+                <a href="/Departamento"><span>🏢 Departamentos</span></a>
+            </li>
+            <li class="sidebar-item">
+                <a href="/Pago/Index"><span>💰 Pagos</span></a>
+            </li>
+            <li class="sidebar-item">
+                <a href="/Incidencia"><span>⚠️ Incidencias</span></a>
+            </li>
+            <li class="sidebar-item">
+                <a href="/Reserva/Index"><span>📅 Reservas</span></a>
+            </li>
+            <li class="sidebar-item">
+                <a href="/reportes/Index"><span>📈 Reportes</span></a>
+            </li>
+            <li class="sidebar-item">
+                <a href="/comunicado/Index"><span>📢 Comunicados</span></a>
+            </li>
+            <li class="sidebar-item">
+                <a href="/configuracion/Index"><span>⚙️ Configuración</span></a>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="/Home/Logout" class="sidebar-logout"><span>🚪 Cerrar Sesión</span></a>
+        </div>
+    </aside>
+
+    <!-- CONTENIDO -->
+    <main class="main-content">
+        <header class="top-header">
+            <span class="header-breadcrumb">Propietarios</span>
+            <div class="user-role-box">Rol: @Session["Rol"]</div>
+        </header>
+
+        <div class="dashboard-viewport">
+            <div class="table-container-card">
+                <div class="table-header-flex">
+                    <h2>Gestión de Propietarios</h2>
+                    <a href="/Propietario/Create" class="btn-add-new">+ Nuevo Propietario</a>
+                </div>
+
+                <div class="table-responsive-wrapper">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>DNI</th>
+                                <th>Teléfono</th>
+                                <th>Correo</th>
+                                <th>Torre</th>
+                                <th>Departamento</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td><strong>@item.IdPropietario</strong></td>
+                                    <td>@item.Nombre</td>
+                                    <td>@item.Apellido</td>
+                                    <td>@item.DNI</td>
+                                    <td>@item.Telefono</td>
+                                    <td>@item.Correo</td>
+                                    <td>@item.Torre</td>
+                                    <td>@item.NumeroDepartamento</td>
+                                    <td>
+                                        @if (item.Estado)
+                                        {
+                                            <span class="status-badge active">Activo</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="status-badge inactive">Inactivo</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <a href="/Propietario/Edit/@item.IdPropietario" class="btn-table-action edit">✏️ Editar</a>
+                                        <a href="/Propietario/Delete/@item.IdPropietario" class="btn-table-action delete" onclick="return confirm('¿Desea desactivar este propietario?');">🗑️ Eliminar</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <footer class="dashboard-footer">
+            © 2026 Consorcio DCES. Todos los derechos reservados.
+        </footer>
+    </main>
+
+</div>

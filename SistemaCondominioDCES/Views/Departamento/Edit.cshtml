@@ -1,0 +1,90 @@
+﻿@model SistemaCondominioDCES.Models.Departamento
+@using SistemaCondominioDCES.Models
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Editar Departamento";
+    var torres = ViewBag.Torres as List<Torre>;
+}
+
+<div class="admin-layout">
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand">
+                <img src="~/Content/images/img_dash.png" alt="Logo" class="logo-icon" />
+                <div><h3>CONSORCIO DCES</h3><p>Gestión de Condominios</p></div>
+            </div>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="sidebar-item"><a href="/Home/Dashboard"><span>🏠 Inicio</span></a></li>
+            <li class="sidebar-item"><a href="/Propietario"><span>👥 Propietarios</span></a></li>
+            <li class="sidebar-item active"><a href="/Departamento"><span>🏢 Departamentos</span></a></li>
+            <li class="sidebar-item"><a href="/Pago/Index"><span>💰 Pagos</span></a></li>
+            <li class="sidebar-item"><a href="/Incidencia"><span>⚠️ Incidencias</span></a></li>
+            <li class="sidebar-item"><a href="/Reserva/Index"><span>📅 Reservas</span></a></li>
+            <li class="sidebar-item"><a href="/reportes/Index"><span>📈 Reportes</span></a></li>
+            <li class="sidebar-item"><a href="/comunicado/Index"><span>📢 Comunicados</span></a></li>
+            <li class="sidebar-item"><a href="/configuracion/configuracion"><span>⚙️ Configuración</span></a></li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <a href="/Home/Logout" class="sidebar-logout"><span>🚪 Cerrar Sesión</span></a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-header">
+            <span class="header-breadcrumb">Editar Departamento</span>
+            <div class="user-role-box">Rol: @Session["Rol"]</div>
+        </header>
+
+        <div class="dashboard-viewport">
+            <div class="form-card">
+                <div class="form-card-breadcrumb">
+                    <a href="/Departamento">Departamentos</a> › Editar Departamento
+                </div>
+
+                <form method="post">
+                    <input type="hidden" name="IdDepartamento" value="@Model.IdDepartamento" />
+
+                    <div class="form-field-row">
+                        <label class="form-field-label">Torre <span class="required">*</span></label>
+                        <div class="form-field-input">
+                            <select name="IdTorre" class="form-select-custom" required>
+                                @foreach (var torre in torres)
+                                {
+                                    <option value="@torre.IdTorre" @(torre.IdTorre == Model.IdTorre ? "selected" : "")>
+                                        @torre.NombreTorre
+                                    </option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-field-row">
+                        <label class="form-field-label">Número <span class="required">*</span></label>
+                        <div class="form-field-input">
+                            <input type="text" name="Numero" value="@Model.Numero" class="form-input-custom" required />
+                        </div>
+                    </div>
+
+                    <div class="form-field-row">
+                        <label class="form-field-label">Piso <span class="required">*</span></label>
+                        <div class="form-field-input">
+                            <input type="number" name="Piso" value="@Model.Piso" class="form-input-custom" required />
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-form-submit">💾 Actualizar Departamento</button>
+                        <a href="/Departamento" class="btn-form-cancel">✕ Cancelar</a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <footer class="dashboard-footer">© 2026 Consorcio DCES. Todos los derechos reservados.</footer>
+    </main>
+
+</div>

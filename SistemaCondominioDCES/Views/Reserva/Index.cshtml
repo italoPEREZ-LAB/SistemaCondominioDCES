@@ -1,0 +1,98 @@
+﻿@model List<SistemaCondominioDCES.Models.Reserva>
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Reservas";
+}
+
+<div class="admin-layout">
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand">
+                <img src="~/Content/images/img_dash.png" alt="Logo" class="logo-icon" />
+                <div><h3>CONSORCIO DCES</h3><p>Gestión de Condominios</p></div>
+            </div>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="sidebar-item"><a href="/Home/Dashboard"><span>🏠 Inicio</span></a></li>
+            <li class="sidebar-item"><a href="/Propietario"><span>👥 Propietarios</span></a></li>
+            <li class="sidebar-item"><a href="/Departamento"><span>🏢 Departamentos</span></a></li>
+            <li class="sidebar-item"><a href="/Pago/Index"><span>💰 Pagos</span></a></li>
+            <li class="sidebar-item"><a href="/Incidencia"><span>⚠️ Incidencias</span></a></li>
+            <li class="sidebar-item active"><a href="/Reserva/Index"><span>📅 Reservas</span></a></li>
+            <li class="sidebar-item"><a href="/reportes/Index"><span>📈 Reportes</span></a></li>
+            <li class="sidebar-item"><a href="/comunicado/Index"><span>📢 Comunicados</span></a></li>
+            <li class="sidebar-item"><a href="/configuracion/Index"><span>⚙️ Configuración</span></a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="/Home/Logout" class="sidebar-logout"><span>🚪 Cerrar Sesión</span></a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-header">
+            <span class="header-breadcrumb">Reservas</span>
+            <div class="user-role-box">Rol: @Session["Rol"]</div>
+        </header>
+
+        <div class="dashboard-viewport">
+            <div class="table-container-card">
+                <div class="table-header-flex">
+                    <h2>Gestión de Reservas</h2>
+                    <a href="/Reserva/Create" class="btn-add-new">+ Nueva Reserva</a>
+                </div>
+
+                <div class="table-responsive-wrapper">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Solicitante</th>
+                                <th>Área Común</th>
+                                <th>Fecha</th>
+                                <th>Hora Inicio</th>
+                                <th>Hora Fin</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td><strong>@item.IdReserva</strong></td>
+                                    <td>@item.NombreUsuario</td>
+                                    <td>@item.NombreAreaComun</td>
+                                    <td>@item.FechaReserva.ToString("dd/MM/yyyy")</td>
+                                    <td>@item.HoraInicio.ToString(@"hh\:mm")</td>
+                                    <td>@item.HoraFin.ToString(@"hh\:mm")</td>
+                                    <td>
+                                        @if (item.Estado == "Confirmada")
+                                        {
+                                            <span class="status-badge active">Confirmada</span>
+                                        }
+                                        else if (item.Estado == "Pendiente")
+                                        {
+                                            <span class="status-badge pending">Pendiente</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="status-badge inactive">Cancelada</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <a href="/Reserva/Edit/@item.IdReserva" class="btn-table-action edit">✏️ Editar</a>
+                                        <a href="/Reserva/Delete/@item.IdReserva" class="btn-table-action delete" onclick="return confirm('¿Desea cancelar esta reserva?');">🗑️ Eliminar</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <footer class="dashboard-footer">© 2026 Consorcio DCES. Todos los derechos reservados.</footer>
+    </main>
+
+</div>

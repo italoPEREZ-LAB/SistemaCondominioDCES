@@ -1,0 +1,103 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Dashboard";
+}
+
+<div class="admin-layout">
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand">
+                <img src="~/Content/images/img_dash.png" alt="Logo" class="logo-icon" />
+                <div>
+                    <h3>CONSORCIO DCES</h3>
+                    <p>Gestión de Condominios</p>
+                </div>
+            </div>
+        </div>
+
+        <ul class="sidebar-menu">
+            <li class="sidebar-item active">
+                <a href="/Home/Dashboard"><span>🏠 Inicio</span></a>
+            </li>
+            <li class="sidebar-item">
+                <a href="/Propietario"><span>👥 Propietarios</span></a>
+            </li>
+            <li class="sidebar-item">
+                <a href="/Departamento"><span>🏢 Departamentos</span></a>
+            </li>
+            <li class="sidebar-item">
+                <a href="/Pago/Index"><span>💰 Pagos</span></a>
+            </li>
+            <li class="sidebar-item">
+                <a href="/Incidencia"><span>⚠️ Incidencias</span></a>
+            </li>
+            <li class="sidebar-item">
+                <a href="/Reserva/Index"><span>📅 Reservas</span></a>
+            </li>
+            <li class="sidebar-item">
+                <a href="/reportes/Index"><span>📈 Reportes</span></a>
+            </li>
+            <li class="sidebar-item">
+                <a href="/comunicado/Index"><span>📢 Comunicados</span></a>
+            </li>
+            <li class="sidebar-item">
+                <a href="/configuracion/Index"><span>⚙️ Configuración</span></a>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <a href="/Home/Logout" class="sidebar-logout">
+                <span>🚪 Cerrar Sesión</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+        <header class="top-header">
+            <span class="header-breadcrumb">Dashboard</span>
+            <div class="user-role-box">Rol: @Session["Rol"]</div>
+        </header>
+
+        <div class="dashboard-viewport">
+
+            <div class="kpi-grid">
+                <div class="kpi-card-modern bg-blue">
+                    <h3>@ViewBag.TotalPropietarios</h3>
+                    <p>Propietarios</p>
+                    <a href="/Propietario" class="kpi-action-link">Ver más →</a>
+                </div>
+                <div class="kpi-card-modern bg-green">
+                    <h3>@ViewBag.PagosPendientes</h3>
+                    <p>Pagos Pendientes</p>
+                    <a href="/Pago/Index" class="kpi-action-link">Ver más →</a>
+                </div>
+                <div class="kpi-card-modern bg-orange">
+                    <h3>@ViewBag.TotalIncidencias</h3>
+                    <p>Incidencias</p>
+                    <a href="/Incidencia" class="kpi-action-link">Ver más →</a>
+                </div>
+                <div class="kpi-card-modern bg-purple">
+                    <h3>@ViewBag.ReservasHoy</h3>
+                    <p>Reservas Hoy</p>
+                    <a href="/Reserva/Index" class="kpi-action-link">Ver más →</a>
+                </div>
+            </div>
+
+            <div class="quick-actions-card">
+                <h5>Accesos rápidos</h5>
+                <a href="/Propietario/Create" class="btn-action-quick action-blue">Nuevo propietario</a>
+                <a href="/Pago/Create" class="btn-action-quick action-green">Registrar pago</a>
+                <a href="/Incidencia/Create" class="btn-action-quick action-orange">Nueva incidencia</a>
+                <a href="/Reserva/Create" class="btn-action-quick action-purple">Nueva reserva</a>
+            </div>
+
+        </div>
+
+        <footer class="dashboard-footer">
+            © 2026 Consorcio DCES. Todos los derechos reservados.
+        </footer>
+    </main>
+
+</div>
