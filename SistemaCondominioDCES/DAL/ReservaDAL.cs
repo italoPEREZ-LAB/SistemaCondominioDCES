@@ -12,6 +12,7 @@ namespace SistemaCondominioDCES.DAL
         public List<Reserva> Listar()
         {
             var lista = new List<Reserva>();
+
             using (SqlConnection conexion = cn.ObtenerConexion())
             {
                 string query = @"SELECT r.IdReserva, u.Nombre, ac.NombreArea AS AreaComun,
@@ -22,6 +23,7 @@ namespace SistemaCondominioDCES.DAL
 
                 SqlCommand cmd = new SqlCommand(query, conexion);
                 conexion.Open();
+
                 SqlDataReader dr = cmd.ExecuteReader();
 
                 while (dr.Read())
@@ -38,47 +40,67 @@ namespace SistemaCondominioDCES.DAL
                     });
                 }
             }
+
             return lista;
+        }
+
+        public bool ExisteReservaDuplicada(int idAreaComun, DateTime fechaReserva, TimeSpan horaInicio, TimeSpan horaFin)
+        {
+            using (SqlConnection conexion = cn.ObtenerConexion())
+            {
+                string query = @"SELECT COUNT(*) 
+                                 FROM Reservas 
+                                 WHERE IdAreaComun = @IdAreaComun
+                                 AND CAST(FechaReserva AS DATE) = CAST(@FechaReserva AS DATE)
+                                 AND (HoraInicio < @HoraFin AND HoraFin > @HoraInicio)
+                                 AND Estado <> 'Cancelado'
+                                 AND Estado <> 'CANCELADA'
+                                 AND Estado <> 'CANCELADA'";
+
+                SqlCommand cmd = new SqlCommand(query, conexion);
+                cmd.Parameters.AddWithValue("@IdAreaComun", idAreaComun);
+                cmd.Parameters.AddWithValue("@FechaReserva", fechaReserva.Date);
+                cmd.Parameters.AddWithValue("@HoraInicio", horaInicio);
+                cmd.Parameters.AddWithValue("@HoraFin", horaFin);
+
+                conexion.Open();
+
+                int cantidad = (int)cmd.ExecuteScalar();
+
+                return cantidad > 0;
+            }
         }
 
         public bool Registrar(Reserva reserva)
         {
+            if (ExisteReservaDuplicada(
+                reserva.IdAreaComun,
+                reserva.FechaReserva,
+                reserva.HoraInicio,
+                reserva.HoraFin))
+            {
+                return false;
+            }
+
             using (SqlConnection conexion = cn.ObtenerConexion())
             {
-                string validar = @"SELECT COUNT(*) 
-                                   FROM Reservas 
-                                   WHERE IdAreaComun=@IdAreaComun 
-                                     AND FechaReserva=@FechaReserva 
-                                     AND (HoraInicio < @HoraFin AND HoraFin > @HoraInicio)";
-                SqlCommand cmdValidar = new SqlCommand(validar, conexion);
-                cmdValidar.Parameters.AddWithValue("@IdAreaComun", reserva.IdAreaComun);
-                cmdValidar.Parameters.AddWithValue("@FechaReserva", reserva.FechaReserva);
-                cmdValidar.Parameters.AddWithValue("@HoraInicio", reserva.HoraInicio);
-                cmdValidar.Parameters.AddWithValue("@HoraFin", reserva.HoraFin);
-
-                conexion.Open();
-                int existe = (int)cmdValidar.ExecuteScalar();
-                conexion.Close();
-
-                if (existe > 0)
-                {
-                    return false; 
-                }
-
-                string query = @"INSERT INTO Reservas (IdUsuario, IdAreaComun, FechaReserva, HoraInicio, HoraFin, Estado)
-                                 VALUES (@IdUsuario, @IdAreaComun, @FechaReserva, @HoraInicio, @HoraFin, @Estado)";
+                string query = @"INSERT INTO Reservas 
+                                (IdUsuario, IdAreaComun, FechaReserva, HoraInicio, HoraFin, Estado)
+                                VALUES 
+                                (@IdUsuario, @IdAreaComun, @FechaReserva, @HoraInicio, @HoraFin, @Estado)";
 
                 SqlCommand cmd = new SqlCommand(query, conexion);
                 cmd.Parameters.AddWithValue("@IdUsuario", reserva.IdUsuario);
                 cmd.Parameters.AddWithValue("@IdAreaComun", reserva.IdAreaComun);
-                cmd.Parameters.AddWithValue("@FechaReserva", reserva.FechaReserva);
+                cmd.Parameters.AddWithValue("@FechaReserva", reserva.FechaReserva.Date);
                 cmd.Parameters.AddWithValue("@HoraInicio", reserva.HoraInicio);
                 cmd.Parameters.AddWithValue("@HoraFin", reserva.HoraFin);
-                cmd.Parameters.AddWithValue("@Estado", reserva.Estado ?? "Confirmado");
+                cmd.Parameters.AddWithValue("@Estado", reserva.Estado ?? "Pendiente");
 
                 conexion.Open();
                 cmd.ExecuteNonQuery();
             }
+
             return true;
         }
     }

@@ -1,6 +1,7 @@
 ﻿using SistemaCondominioDCES.DAL;
 using SistemaCondominioDCES.Models;
 using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace SistemaCondominioDCES.Controllers
@@ -25,7 +26,8 @@ namespace SistemaCondominioDCES.Controllers
             var validar = ValidarAdmin();
             if (validar != null) return validar;
 
-            return View();
+             var lista = comunicadoDAL.Listar();
+            return View(lista);
         }
 
         public ActionResult Create()

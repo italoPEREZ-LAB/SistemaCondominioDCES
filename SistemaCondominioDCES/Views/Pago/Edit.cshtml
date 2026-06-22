@@ -1,8 +1,8 @@
 ﻿@model SistemaCondominioDCES.Models.Pago
+
 @{
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
     ViewBag.Title = "Editar Pago";
-    var recibos = ViewBag.Recibos as List<SelectListItem>;
 }
 
 <div class="admin-layout">
@@ -48,24 +48,11 @@
                     <a href="/Pago/Index">Pagos</a> › Editar Pago
                 </div>
 
-                <form method="post" action="/Reserva/Edit">
-                    <input type="hidden" name="IdPago" value="@Model.IdPago" />
+                <form method="post" action="@Url.Action("Edit", "Pago")">
+                    @Html.AntiForgeryToken()
 
-                    <div class="form-field-row">
-                        <label class="form-field-label">Recibo <span class="required">*</span></label>
-                        <div class="form-field-input">
-                            <select name="IdRecibo" class="form-select-custom" required>
-                                <option value="">Seleccionar recibo</option>
-                                @if (recibos != null)
-                                {
-                                    foreach (var r in recibos)
-                                    {
-                                        <option value="@r.Value" @(r.Value == Model.IdRecibo.ToString() ? "selected" : "")>@r.Text</option>
-                                    }
-                                }
-                            </select>
-                        </div>
-                    </div>
+                    <input type="hidden" name="IdPago" value="@Model.IdPago" />
+                    <input type="hidden" name="IdRecibo" value="@Model.IdRecibo" />
 
                     <div class="form-field-row">
                         <label class="form-field-label">Monto (S/.) <span class="required">*</span></label>

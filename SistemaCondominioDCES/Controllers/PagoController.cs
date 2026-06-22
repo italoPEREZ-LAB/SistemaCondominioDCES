@@ -25,20 +25,97 @@ namespace SistemaCondominioDCES.Controllers
             if (Session["Usuario"] == null)
                 return RedirectToAction("Login", "Home");
 
+            if (Session["Rol"] == null || Session["Rol"].ToString() != "Administrador")
+                return RedirectToAction("AccesoDenegado", "Home");
+
+            CargarRecibos();
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create(Pago pago)
+        {
+            if (Session["Usuario"] == null)
+                return RedirectToAction("Login", "Home");
+
+            if (Session["Rol"] == null || Session["Rol"].ToString() != "Administrador")
+                return RedirectToAction("AccesoDenegado", "Home");
+
+            bool ok = pagoDAL.Registrar(pago);
+
+            if (!ok)
+            {
+                ViewBag.Error = "El monto excede el recibo.";
+                CargarRecibos();
+                return View(pago);
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Edit(int id)
+        {
+            if (Session["Usuario"] == null)
+                return RedirectToAction("Login", "Home");
+
+            if (Session["Rol"] == null || Session["Rol"].ToString() != "Administrador")
+                return RedirectToAction("AccesoDenegado", "Home");
+
+            Pago pago = pagoDAL.ObtenerPorId(id);
+
+            if (pago == null)
+                return RedirectToAction("Index");
+
+            return View(pago);
+        }
+
+        [HttpPost]
+        
+        public ActionResult Edit(Pago pago)
+        {
+            if (Session["Usuario"] == null)
+                return RedirectToAction("Login", "Home");
+
+            if (Session["Rol"] == null || Session["Rol"].ToString() != "Administrador")
+                return RedirectToAction("AccesoDenegado", "Home");
+
+            pagoDAL.Actualizar(pago);
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Delete(int id)
+        {
+            if (Session["Usuario"] == null)
+                return RedirectToAction("Login", "Home");
+
+            if (Session["Rol"] == null || Session["Rol"].ToString() != "Administrador")
+                return RedirectToAction("AccesoDenegado", "Home");
+
+            pagoDAL.Eliminar(id);
+
+            return RedirectToAction("Index");
+        }
+
+        private void CargarRecibos()
+        {
             var listaRecibos = new List<SelectListItem>();
+
             using (SqlConnection conexion = cn.ObtenerConexion())
             {
                 string query = @"SELECT r.IdRecibo,
                                 p.Nombre + ' ' + p.Apellido AS Propietario,
-                                r.Concepto, r.Monto
+                                r.Concepto, 
+                                r.Monto
                          FROM Recibos r
-                         INNER JOIN Departamentos d ON r.IdDepartamento = d.IdDepartamento
-                         INNER JOIN Propietarios p ON p.NumeroDepartamento = d.Numero
+                        INNER JOIN Propietarios p ON r.IdPropietario = p.IdPropietario
                          WHERE r.Estado = 'Pendiente'";
 
                 SqlCommand cmd = new SqlCommand(query, conexion);
                 conexion.Open();
+
                 SqlDataReader dr = cmd.ExecuteReader();
+
                 while (dr.Read())
                 {
                     listaRecibos.Add(new SelectListItem
@@ -50,24 +127,6 @@ namespace SistemaCondominioDCES.Controllers
             }
 
             ViewBag.Recibos = listaRecibos;
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Create(Pago pago)
-        {
-            if (Session["Usuario"] == null)
-                return RedirectToAction("Login", "Home");
-
-            bool ok = pagoDAL.Registrar(pago);
-            if (!ok)
-            {
-                ViewBag.Error = "El monto excede el recibo.";
-                return View(pago);
-            }
-
-            return RedirectToAction("Index");
         }
     }
 }
-

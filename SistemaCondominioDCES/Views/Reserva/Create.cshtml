@@ -1,9 +1,17 @@
 ﻿@model SistemaCondominioDCES.Models.Reserva
+
 @{
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
     ViewBag.Title = "Nueva Reserva";
-    var usuarios = ViewBag.Usuarios as List<SelectListItem>;
-    var areas = ViewBag.Areas as List<SelectListItem>;
+    var usuarios = ViewBag.Usuarios as List<SelectListItem> ?? new List<SelectListItem>();
+    var areas = ViewBag.Areas as List<SelectListItem> ?? new List<SelectListItem>();
+}
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">
+        ⚠️ @ViewBag.Error
+    </div>
 }
 
 <div class="admin-layout">

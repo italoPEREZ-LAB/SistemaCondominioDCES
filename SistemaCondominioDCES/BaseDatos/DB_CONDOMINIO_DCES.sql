@@ -279,3 +279,15 @@ SELECT IdUsuario,
        Correo,
        PasswordHash
 FROM Usuarios;
+
+SELECT 
+    p.IdPago,
+    pr.Nombre + ' ' + pr.Apellido AS Propietario,
+    p.Monto,
+    p.FechaPago,
+    p.MetodoPago,
+    p.Estado
+FROM Pagos p
+INNER JOIN Recibos r ON p.IdRecibo = r.IdRecibo
+INNER JOIN Departamentos d ON r.IdDepartamento = d.IdDepartamento
+INNER JOIN Propietarios pr ON pr.NumeroDepartamento = d.Numero

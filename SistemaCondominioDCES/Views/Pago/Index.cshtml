@@ -74,9 +74,17 @@
                                             <span class="status-badge inactive">Pendiente</span>
                                         }
                                     </td>
-                                    <td>
-                                        <a href="/Pago/Edit/@item.IdPago" class="btn-table-action edit">✏️ Editar</a>
-                                        <a href="/Pago/Delete/@item.IdPago" class="btn-table-action delete" onclick="return confirm('¿Desea eliminar este pago?');">🗑️ Eliminar</a>
+                                    <td style="text-align:center;">
+                                        <a href="/Pago/Edit/@item.IdPago"
+                                           style="background:#fff4d6; color:#f59e0b; padding:8px 14px; border-radius:8px; text-decoration:none; font-weight:600; margin-right:8px;">
+                                            ✏️ Editar
+                                        </a>
+
+                                        <a href="/Pago/Delete/@item.IdPago"
+                                           onclick="return confirm('¿Desea eliminar este pago?');"
+                                           style="background:#fde2e2; color:#ef4444; padding:8px 14px; border-radius:8px; text-decoration:none; font-weight:600;">
+                                            🗑 Eliminar
+                                        </a>
                                     </td>
                                 </tr>
                             }
